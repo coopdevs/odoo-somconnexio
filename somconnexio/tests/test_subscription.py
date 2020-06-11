@@ -19,10 +19,7 @@ class TestSubscription(TransactionCase):
             'list_price': 100,
             'display_on_website': True
         })
-        return result
-
-    def test_create_subscription_regular(self):
-        vals_subscription_regular = {
+        self.vals_subscription_regular = {
             'already_cooperator': False,
             'name': 'Manuel Dublues Test',
             'email': 'manuel@demo-test.net',
@@ -37,5 +34,14 @@ class TestSubscription(TransactionCase):
             'share_product_id': self.product_template_test.product_variant_id.id,
             'lang': 'en_US'
             }
-        subscription_regular = self.SubscriptionRequest.create(vals_subscription_regular)
+        return result
+
+    def test_create_subscription_regular(self):
+        subscription_regular = self.SubscriptionRequest.create(self.vals_subscription_regular)
         self.assertEqual(subscription_regular.subscription_amount, 100.0)
+
+    def test_create_subscription_refered(self):
+        vals_subscription_refered = self.vals_subscription_regular.copy()
+        vals_subscription_refered.update({'share_product_id': False, 'ordered_parts': False})
+        subscription_regular = self.SubscriptionRequest.create(vals_subscription_refered)
+        self.assertEqual(subscription_regular.subscription_amount, 0.0)
