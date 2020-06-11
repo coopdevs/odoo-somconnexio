@@ -8,6 +8,16 @@ class SubscriptionRequest(models.Model):
     share_product_id = fields.Many2one(required=False)
     type = fields.Selection(selection_add=[('referred', 'Referred')])
 
+    referrer_id = fields.Many2one(
+        'res.partner',
+        string='Referrer',
+        domain=[
+            '|',
+            ('cooperator', '=', True),
+            ('member', '=', True),
+        ]
+    )
+
     @api.one
     def validate_subscription_request(self):
         try:

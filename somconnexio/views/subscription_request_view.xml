@@ -11,6 +11,9 @@
       <field name="share_product_id" position="attributes">
         <attribute name="attrs">{'required': [('type','!=','referred')]}</attribute>
       </field>
+      <field name="type" position="after">
+        <field name="referrer_id" attrs="{'required': [('type','=','referred')], 'invisible': [('type','!=','referred')]}"/>
+      </field>
     </field>
   </record>
 </odoo>
