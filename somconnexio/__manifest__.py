@@ -10,5 +10,6 @@
     """,
     "license": "AGPL-3",
     'data': [
+        'views/subscription_request_view.xml'
     ],
 }
