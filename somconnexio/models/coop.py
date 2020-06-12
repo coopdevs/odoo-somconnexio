@@ -23,7 +23,7 @@ class SubscriptionRequest(models.Model):
         try:
             invoice = super().validate_subscription_request()
         except UserError:
-            if self.ordered_parts == 0 and self.type == 'referred':
+            if self.ordered_parts <= 0 and self.type == 'referred':
                 pass
             else:
                 raise
