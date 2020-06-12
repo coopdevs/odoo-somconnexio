@@ -100,6 +100,6 @@ class SubscriptionRequest(models.Model):
         return values
 
     def get_partner_vals(self):
-        values = super().get_partner_company_vals()
+        values = super().get_partner_vals()
         values['referrer_id'] = self.referrer_id.id
         return values
