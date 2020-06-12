@@ -29,41 +29,70 @@ class SubscriptionRequest(models.Model):
                 raise
         else:
             return invoice
-        # TODO Implement refered case
-        partner_obj = self.env['res.partner']
 
-        partner = self.create_coop_partner()
-        self.partner_id = partner
+        self.partner_obj = self.env['res.partner']
 
-        partner.cooperator = False
+        self._check_already_cooperator()
 
-        # TODO: Can we extract this piece of code to a new method?
-        if self.is_company and not partner.has_representative():
+        if not self.partner:
+            self.partner = self.create_coop_partner()
+            self.partner_id = self.partner
+        else:
+            self.partner = self.partner[0]
+
+        self.partner.cooperator = True
+
+        self._create_company_contact()
+
+        self.write({'state': 'done'})
+        return True
+
+    def _check_already_cooperator(self):
+        if self.already_cooperator:
+            raise UserError(
+                _(
+                    "The checkbox already cooperator is"
+                    " checked please select a cooperator."
+                )
+            )
+        elif self.is_company and self.company_register_number:
+            domain = [
+                (
+                    "company_register_number",
+                    "=",
+                    self.company_register_number,
+                )
+            ]  # noqa
+        elif not self.is_company and self.email:
+            domain = [("email", "=", self.email)]
+
+        if domain:
+            self.partner = self.partner_obj.search(domain)
+
+    def _create_company_contact(self):
+        if self.is_company and not self.partner.has_representative():
             contact = False
             if self.email:
                 domain = [('email', '=', self.email)]
-                contact = partner_obj.search(domain)
+                contact = self.partner_obj.search(domain)
                 if contact:
                     contact.type = 'representative'
             if not contact:
                 contact_vals = self.get_representative_vals()
-                partner_obj.create(contact_vals)
+                self.partner_obj.create(contact_vals)
             else:
                 if len(contact) > 1:
                     raise UserError(_('There is two different persons with the'
                                       ' same national register number. Please'
                                       ' proceed to a merge before to continue')
                                     )
-                if contact.parent_id and contact.parent_id.id != partner.id:
+                if contact.parent_id and contact.parent_id.id != self.partner.id:
                     raise UserError(_('This contact person is already defined'
                                       ' for another company. Please select'
                                       ' another contact'))
                 else:
-                    contact.write({'parent_id': partner.id,
+                    contact.write({'parent_id': self.partner.id,
                                    'representative': True})
-
-        self.write({'state': 'done'})
-        return True
 
     def get_partner_company_vals(self):
         values = super().get_partner_company_vals()
