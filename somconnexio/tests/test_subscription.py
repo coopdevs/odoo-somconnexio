@@ -7,19 +7,7 @@ class TestSubscription(TransactionCase):
     def setUp(self, *args, **kwargs):
         result = super().setUp(*args, **kwargs)
         self.SubscriptionRequest = self.env['subscription.request']
-        self.product_template_test = self.env['product.template'].create({
-            'name': 'Part T - Test',
-            'short_name': 'Part T',
-            'is_share': True,
-            'default_share_product': True,
-            'force_min_qty': True,
-            'minimum_quantity': 1,
-            'by_individual': True,
-            'by_company': True,
-            'list_price': 100,
-            'display_on_website': True
-        })
-        self.vals_subscription_regular = {
+        self.vals_subscription = {
             'already_cooperator': False,
             'name': 'Manuel Dublues Test',
             'email': 'manuel@demo-test.net',
@@ -31,17 +19,49 @@ class TestSubscription(TransactionCase):
             'date': datetime.now()-timedelta(days=12),
             'company_id': 1,
             'source': 'manual',
-            'share_product_id': self.product_template_test.product_variant_id.id,
+            'share_product_id': None,
             'lang': 'en_US'
-            }
+        }
         return result
 
     def test_create_subscription_regular(self):
-        subscription_regular = self.SubscriptionRequest.create(self.vals_subscription_regular)
-        self.assertEqual(subscription_regular.subscription_amount, 100.0)
+        vals_subscription_regular = self.vals_subscription.copy()
+        self.product_template_test = self.browse_ref(
+            "easy_my_coop.product_template_share_type_1_demo"
+        )
+        vals_subscription_regular.update({
+            'share_product_id': self.product_template_test.product_variant_id.id,
+            'ordered_parts': 1
+        })
+        subscription_regular = self.SubscriptionRequest.create(vals_subscription_regular)
+        self.assertEqual(subscription_regular.subscription_amount, 50.0)
 
     def test_create_subscription_refered(self):
-        vals_subscription_refered = self.vals_subscription_regular.copy()
-        vals_subscription_refered.update({'share_product_id': False, 'ordered_parts': False})
+        vals_subscription_refered = self.vals_subscription.copy()
+        referrer_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
+        vals_subscription_refered.update({
+            'share_product_id': False,
+            'ordered_parts': False,
+            'type': 'referred',
+            'referrer_id': referrer_id,
+        })
         subscription_regular = self.SubscriptionRequest.create(vals_subscription_refered)
         self.assertEqual(subscription_regular.subscription_amount, 0.0)
+
+    def test_validate_subscription_refered(self):
+        vals_subscription_refered = self.vals_subscription.copy()
+        referrer_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
+        vals_subscription_refered.update({
+            'share_product_id': False,
+            'ordered_parts': False,
+            'referrer_id': referrer_id,
+            'type': 'referred',
+        })
+
+        subscription_regular = self.SubscriptionRequest.create(vals_subscription_refered)
+        subscription_regular.validate_subscription_request()
+
+        partner = subscription_regular.partner_id
+
+        self.assertTrue(partner.cooperator)
+        self.assertEqual(partner.referrer_id.id, referrer_id)
