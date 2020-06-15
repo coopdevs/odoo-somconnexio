@@ -6,13 +6,13 @@
     <field name="inherit_id" ref="easy_my_coop.subscription_request_form" />
     <field name="arch" type="xml">
       <field name="ordered_parts" position="attributes">
-        <attribute name="attrs">{'required': [('type','!=','referred')]}</attribute>
+        <attribute name="attrs">{'required': [('type','!=','sponsorship')]}</attribute>
       </field>
       <field name="share_product_id" position="attributes">
-        <attribute name="attrs">{'required': [('type','!=','referred')]}</attribute>
+        <attribute name="attrs">{'required': [('type','!=','sponsorship')]}</attribute>
       </field>
       <field name="type" position="after">
-        <field name="referrer_id" attrs="{'required': [('type','=','referred')], 'invisible': [('type','!=','referred')]}"/>
+        <field name="sponsor_id" attrs="{'required': [('type','=','sponsorship')], 'invisible': [('type','!=','sponsorship')]}"/>
       </field>
     </field>
   </record>

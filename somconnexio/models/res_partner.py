@@ -4,19 +4,17 @@ from odoo import models, fields
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    referenced_ids = fields.One2many(
+    sponsee_ids = fields.One2many(
         'subscription.request',
-        'referrer_id',
-        string='Referenced',
+        'sponsor_id',
+        string='Sponsees',
         readonly=True
     )
 
-    referrer_id = fields.Many2one(
+    sponsor_id = fields.Many2one(
         'res.partner',
-        string='Referrer',
+        string='Sponsor',
         domain=[
-            '|',
-            ('cooperator', '=', True),
             ('member', '=', True),
         ]
     )

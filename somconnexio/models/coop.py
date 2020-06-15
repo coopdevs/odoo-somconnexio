@@ -6,14 +6,12 @@ from odoo.exceptions import UserError
 class SubscriptionRequest(models.Model):
     _inherit = 'subscription.request'
     share_product_id = fields.Many2one(required=False)
-    type = fields.Selection(selection_add=[('referred', 'Referred')])
+    type = fields.Selection(selection_add=[('sponsorship', 'Sponsorship')])
 
-    referrer_id = fields.Many2one(
+    sponsor_id = fields.Many2one(
         'res.partner',
-        string='Referrer',
+        string='Sponsor',
         domain=[
-            '|',
-            ('cooperator', '=', True),
             ('member', '=', True),
         ]
     )
@@ -23,7 +21,7 @@ class SubscriptionRequest(models.Model):
         try:
             invoice = super().validate_subscription_request()
         except UserError:
-            if self.ordered_parts <= 0 and self.type == 'referred':
+            if self.ordered_parts == 0 and self.type == 'sponsorship':
                 pass
             else:
                 raise
@@ -96,10 +94,10 @@ class SubscriptionRequest(models.Model):
 
     def get_partner_company_vals(self):
         values = super().get_partner_company_vals()
-        values['referrer_id'] = self.referrer_id.id
+        values['sponsor_id'] = self.sponsor_id.id
         return values
 
     def get_partner_vals(self):
         values = super().get_partner_vals()
-        values['referrer_id'] = self.referrer_id.id
+        values['sponsor_id'] = self.sponsor_id.id
         return values

@@ -36,32 +36,32 @@ class TestSubscription(TransactionCase):
         subscription_regular = self.SubscriptionRequest.create(vals_subscription_regular)
         self.assertEqual(subscription_regular.subscription_amount, 50.0)
 
-    def test_create_subscription_refered(self):
-        vals_subscription_refered = self.vals_subscription.copy()
-        referrer_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
-        vals_subscription_refered.update({
+    def test_create_subscription_sponsorship(self):
+        vals_subscription_sponsorship = self.vals_subscription.copy()
+        sponsor_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
+        vals_subscription_sponsorship.update({
             'share_product_id': False,
             'ordered_parts': False,
-            'type': 'referred',
-            'referrer_id': referrer_id,
+            'type': 'sponsorship',
+            'sponsor_id': sponsor_id,
         })
-        subscription_regular = self.SubscriptionRequest.create(vals_subscription_refered)
+        subscription_regular = self.SubscriptionRequest.create(vals_subscription_sponsorship)
         self.assertEqual(subscription_regular.subscription_amount, 0.0)
 
-    def test_validate_subscription_refered(self):
-        vals_subscription_refered = self.vals_subscription.copy()
-        referrer_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
-        vals_subscription_refered.update({
+    def test_validate_subscription_sponsorship(self):
+        vals_subscription_sponsorship = self.vals_subscription.copy()
+        sponsor_id = self.ref("easy_my_coop.res_partner_cooperator_1_demo")
+        vals_subscription_sponsorship.update({
             'share_product_id': False,
             'ordered_parts': False,
-            'referrer_id': referrer_id,
-            'type': 'referred',
+            'sponsor_id': sponsor_id,
+            'type': 'sponsorship',
         })
 
-        subscription_regular = self.SubscriptionRequest.create(vals_subscription_refered)
+        subscription_regular = self.SubscriptionRequest.create(vals_subscription_sponsorship)
         subscription_regular.validate_subscription_request()
 
         partner = subscription_regular.partner_id
 
         self.assertTrue(partner.cooperator)
-        self.assertEqual(partner.referrer_id.id, referrer_id)
+        self.assertEqual(partner.sponsor_id.id, sponsor_id)
