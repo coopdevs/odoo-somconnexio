@@ -58,10 +58,13 @@ class TestSubscription(TransactionCase):
             'type': 'sponsorship',
         })
 
-        subscription_regular = self.SubscriptionRequest.create(vals_subscription_sponsorship)
-        subscription_regular.validate_subscription_request()
+        subscription_sponsorship = self.SubscriptionRequest.create(vals_subscription_sponsorship)
+        subscription_sponsorship.validate_subscription_request()
 
-        partner = subscription_regular.partner_id
+        partner = subscription_sponsorship.partner_id
 
         self.assertTrue(partner.cooperator)
+        self.assertFalse(partner.member)
         self.assertEqual(partner.sponsor_id.id, sponsor_id)
+        self.assertFalse(partner.coop_candidate)
+        self.assertTrue(partner.coop_sponsee)
