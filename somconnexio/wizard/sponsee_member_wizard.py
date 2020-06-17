@@ -16,12 +16,9 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
     ordered_parts = fields.Integer(string='Number of Share',
                                    required=True,
                                    default=1)
-
-    @api.model
-    def default_get(self, field_names):
-        defaults = super().default_get(field_names)
-        defaults['partner_id'] = self.env.context['active_id']
-        return defaults
+    start_date = fields.Date(string='Start date',
+                             required=True,
+                             default=datetime.now().date())
 
     @api.multi
     def button_upgrade(self):
@@ -31,7 +28,7 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
             'already_cooperator': True,
             'partner_id': self.partner_id.id,
             'ordered_parts': self.ordered_parts,
-            'date': datetime.now(),
+            'date': self.start_date,
             'source': 'manual',
             'share_product_id': self.share_product_id.id,
             'firstname': self.partner_id.firstname,
