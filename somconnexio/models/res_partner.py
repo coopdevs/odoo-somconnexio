@@ -27,10 +27,18 @@ class ResPartner(models.Model):
     @api.depends("sponsor_id")
     @api.depends("subscription_request_ids.state")
     def _compute_coop_candidate(self):
-        super()._compute_coop_candidate()
         for partner in self:
-            if partner.sponsor_id:
-                partner.coop_candidate = False
+            if partner.member:
+                is_candidate = False
+            else:
+                sub_requests = partner.subscription_request_ids.filtered(
+                    lambda record: (
+                            record.state == 'done' and
+                            not record.sponsor_id
+                    )
+                )
+                is_candidate = bool(sub_requests)
+            partner.coop_candidate = is_candidate
     @api.multi
     @api.depends("sponsor_id")
     def _compute_coop_sponsee(self):

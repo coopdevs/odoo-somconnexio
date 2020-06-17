@@ -46,3 +46,4 @@ class TestMemberWizard(TransactionCase):
         })
         wizardSponsee.button_upgrade()
         self.assertTrue(self.sponsee.coop_candidate)
+        self.assertFalse(self.sponsee.coop_sponsee)

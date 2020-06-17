@@ -46,4 +46,5 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
         }
         subscription = request_obj.create(vals_subscription)
         subscription.validate_subscription_request()
+        self.partner_id.sponsor_id = False
         return True
