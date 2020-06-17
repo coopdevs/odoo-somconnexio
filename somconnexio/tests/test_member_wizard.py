@@ -38,6 +38,7 @@ class TestMemberWizard(TransactionCase):
             'partner_id': self.sponsee.id
         })
         self.assertEqual(wizardSponsee.partner_id, self.sponsee)
+        self.assertEqual(wizardSponsee.start_date, datetime.now().date())
 
     def testSponseeToMemberWizardUpgrade(self):
         WizardSponsee = self.SponseeMemberWizard

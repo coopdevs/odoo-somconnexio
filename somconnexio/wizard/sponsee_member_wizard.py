@@ -18,7 +18,11 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
                                    default=1)
     start_date = fields.Date(string='Start date',
                              required=True,
-                             default=datetime.now().date())
+                             default=lambda self: self._get_default_start_date())
+
+    @api.model
+    def _get_default_start_date(self):
+        return datetime.now().date()
 
     @api.multi
     def upgrade(self):
