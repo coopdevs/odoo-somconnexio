@@ -19,9 +19,9 @@ class ResPartner(models.Model):
         ]
     )
     coop_sponsee = fields.Boolean(string="Cooperator Sponsee",
-                                    compute="_compute_coop_sponsee",
-                                    store=True,
-                                    readonly=True)
+                                  compute="_compute_coop_sponsee",
+                                  store=True,
+                                  readonly=True)
 
     @api.multi
     @api.depends("sponsor_id")
@@ -39,6 +39,7 @@ class ResPartner(models.Model):
                 )
                 is_candidate = bool(sub_requests)
             partner.coop_candidate = is_candidate
+
     @api.multi
     @api.depends("sponsor_id")
     def _compute_coop_sponsee(self):

@@ -1,5 +1,6 @@
-from odoo import api, exceptions, fields, models
+from odoo import api, fields, models
 from datetime import datetime
+
 
 class SubscriptionUpgradeSponsee(models.TransientModel):
     _name = 'subscription.upgrade.sponsee'
@@ -42,7 +43,6 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
             'country_id': self.partner_id.country_id.id,
             'phone': self.partner_id.phone,
             'lang': self.partner_id.lang,
-
         }
         subscription = request_obj.create(vals_subscription)
         subscription.validate_subscription_request()
