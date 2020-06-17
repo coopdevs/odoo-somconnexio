@@ -11,6 +11,8 @@
     "license": "AGPL-3",
     'data': [
         'views/subscription_request_view.xml',
-        'views/res_partner_view.xml'
+        'views/res_partner_view.xml',
+        'wizard/sponsee_member_wizard.xml',
+        'views/menus.xml',
     ],
 }

@@ -21,7 +21,7 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
                              default=datetime.now().date())
 
     @api.multi
-    def button_upgrade(self):
+    def upgrade(self):
         self.ensure_one()
         SubscriptionRequest = self.env['subscription.request']
         vals_subscription = {
