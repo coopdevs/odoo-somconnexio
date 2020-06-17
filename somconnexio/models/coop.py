@@ -15,6 +15,7 @@ class SubscriptionRequest(models.Model):
             ('member', '=', True),
         ]
     )
+    iban = fields.Char(required=True)
 
     @api.one
     def validate_subscription_request(self):

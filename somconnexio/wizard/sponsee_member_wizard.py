@@ -37,6 +37,7 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
             'share_product_id': self.share_product_id.id,
             'firstname': self.partner_id.firstname,
             'name': self.partner_id.name,
+            'iban': self.partner_id.bank_ids[0].acc_number,
             'lastname': self.partner_id.lastname,
             'email': self.partner_id.email,
             'birthdate': self.partner_id.birthdate_date,
