@@ -5,7 +5,10 @@ from datetime import datetime
 class SubscriptionUpgradeSponsee(models.TransientModel):
     _name = 'subscription.upgrade.sponsee'
     _description = 'Change a partner from sponsee to member'
-    partner_id = fields.Many2one('res.partner')
+
+    partner_id = fields.Many2one('res.partner',
+                                 domain=[('coop_sponsee', '=', True)],
+                                 required=True)
     share_product_id = fields.Many2one('product.product',
                                        string='Share type',
                                        domain=[('is_share', '=', True)],
