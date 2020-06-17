@@ -52,4 +52,11 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
         subscription = SubscriptionRequest.create(vals_subscription)
         subscription.validate_subscription_request()
         self.partner_id.sponsor_id = False
-        return True
+        return {
+            'view_mode': 'form',
+            'view_id': False,
+            'view_type': 'form',
+            'res_model': 'res.partner',
+            'res_id': self.partner_id.id,
+            'type': 'ir.actions.act_window',
+        }
