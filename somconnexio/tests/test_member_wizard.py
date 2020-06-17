@@ -31,19 +31,21 @@ class TestMemberWizard(TransactionCase):
         self.sponsee = subscription_sponsorship.partner_id
 
     def testSponseeToMemberWizardCreation(self):
-        WizardSponsee = self.SponseeMemberWizard.with_context(active_id=self.sponsee.id)
+        WizardSponsee = self.SponseeMemberWizard
         product_template = self.browse_ref('easy_my_coop.product_template_share_type_2_demo')
         wizardSponsee = WizardSponsee.create({
-            'share_product_id': product_template.product_variant_id.id
+            'share_product_id': product_template.product_variant_id.id,
+            'partner_id': self.sponsee.id
         })
         self.assertEqual(wizardSponsee.partner_id, self.sponsee)
 
     def testSponseeToMemberWizardUpgrade(self):
-        WizardSponsee = self.SponseeMemberWizard.with_context(active_id=self.sponsee.id)
+        WizardSponsee = self.SponseeMemberWizard
         product_template = self.browse_ref('easy_my_coop.product_template_share_type_2_demo')
         wizardSponsee = WizardSponsee.create({
-            'share_product_id': product_template.product_variant_id.id
+            'share_product_id': product_template.product_variant_id.id,
+            'partner_id': self.sponsee.id
         })
-        wizardSponsee.button_upgrade()
+        wizardSponsee.upgrade()
         self.assertTrue(self.sponsee.coop_candidate)
         self.assertFalse(self.sponsee.coop_sponsee)
