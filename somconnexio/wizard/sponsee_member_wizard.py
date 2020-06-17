@@ -23,7 +23,7 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
     @api.multi
     def button_upgrade(self):
         self.ensure_one()
-        request_obj = self.env['subscription.request']
+        SubscriptionRequest = self.env['subscription.request']
         vals_subscription = {
             'already_cooperator': True,
             'partner_id': self.partner_id.id,
@@ -44,7 +44,7 @@ class SubscriptionUpgradeSponsee(models.TransientModel):
             'phone': self.partner_id.phone,
             'lang': self.partner_id.lang,
         }
-        subscription = request_obj.create(vals_subscription)
+        subscription = SubscriptionRequest.create(vals_subscription)
         subscription.validate_subscription_request()
         self.partner_id.sponsor_id = False
         return True
