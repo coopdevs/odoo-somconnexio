@@ -19,5 +19,9 @@
     Odoo Som Connexió customizations.
     """,
     "license": "AGPL-3",
-    'data': [],
+    'data': [
+        'views/coop_agreement_view.xml',
+        'views/menus.xml',
+        'security/ir.model.access.csv'
+    ],
 }

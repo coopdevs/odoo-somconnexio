@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!--
+    TODO:
+    * The model coop.agreement has no access rules, consider adding one. E.g. access_coop_agreement,access_coop_agreement,model_coop_agreement,base.group_user,1,0,0,0
+  -->
+
+  <record id="coop_agreement_tree" model="ir.ui.view">
+    <field name="name">coop.agreement.tree</field>
+    <field name="model">coop.agreement</field>
+    <field name="arch" type="xml">
+      <tree string="Cooperative Agreements">
+        <field name="partner_id"/>
+        <field name="code"/>
+        <field name="products"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="coop_agreement_form" model="ir.ui.view">
+    <field name="name">coop.agreement.form</field>
+    <field name="model">coop.agreement</field>
+    <field name="arch" type="xml">
+      <form string="Cooperative Agreements">
+        <group>
+          <field name="partner_id"/>
+          <field name="code"/>
+          <field name="products"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="coop_agreement_action_view" model="ir.actions.act_window">
+      <field name="name">Cooperative Agreement</field>
+      <field name="res_model">coop.agreement</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+  </record>
+</odoo>
