@@ -22,7 +22,8 @@ class TestSubscription(TransactionCase):
             'source': 'manual',
             'share_product_id': False,
             'lang': 'en_US',
-            'sponsor_id': False
+            'sponsor_id': False,
+            'iban': 'ES6020808687312159493841'
         }
         CoopAgreement = self.env['coop.agreement']
         vals_coop_agreement = {
