@@ -20,6 +20,7 @@
     """,
     "license": "AGPL-3",
     'data': [
+        'views/subscription_request_view.xml',
         'views/coop_agreement_view.xml',
         'views/menus.xml',
         'security/ir.model.access.csv'
