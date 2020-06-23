@@ -1,6 +1,6 @@
 {
     'name': "Odoo Som Connexió customizations",
-    'version': '12.0.0.0.1',
+    'version': '12.0.0.0.2',
     'depends': [
         'easy_my_coop_es',
         'easy_my_coop_sponsorship',
@@ -23,6 +23,7 @@
         'views/subscription_request_view.xml',
         'views/coop_agreement_view.xml',
         'views/menus.xml',
+        'views/res_partner_view.xml',
         'security/ir.model.access.csv'
     ],
 }
