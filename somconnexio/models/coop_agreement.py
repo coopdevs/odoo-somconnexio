@@ -4,7 +4,7 @@ from odoo import models, fields
 class CoopAgreement(models.Model):
     _name = 'coop.agreement'
     _description = "Cooperative agreement"
-
+    _rec_name = 'code'
     partner_id = fields.Many2one('res.partner',
                                  required=True,
                                  string='Cooperator')
