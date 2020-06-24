@@ -3,9 +3,7 @@
     'version': '12.0.0.0.3',
     'depends': [
         'easy_my_coop_es',
-        'easy_my_coop_sponsorship',
-        'sale_management',
-        'contract'
+        'easy_my_coop_sponsorship'
     ],
     'author': "Coopdevs Treball SCCL",
     'website': 'https://coopdevs.org',
