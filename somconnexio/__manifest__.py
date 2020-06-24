@@ -1,9 +1,11 @@
 {
     'name': "Odoo Som Connexió customizations",
-    'version': '12.0.0.0.1',
+    'version': '12.0.0.0.3',
     'depends': [
         'easy_my_coop_es',
-        'easy_my_coop_sponsorship'
+        'easy_my_coop_sponsorship',
+        'sale_management',
+        'contract'
     ],
     'author': "Coopdevs Treball SCCL",
     'website': 'https://coopdevs.org',
@@ -12,5 +14,7 @@
     Odoo Som Connexió customizations.
     """,
     "license": "AGPL-3",
-    'data': [],
+    'data': [
+        'views/res_partner_view.xml'
+    ],
 }
