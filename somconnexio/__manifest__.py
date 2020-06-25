@@ -1,6 +1,6 @@
 {
     'name': "Odoo Som Connexió customizations",
-    'version': '12.0.0.0.3',
+    'version': '12.0.0.0.1',
     'depends': [
         'easy_my_coop_es',
         'easy_my_coop_sponsorship',
@@ -19,7 +19,5 @@
     Odoo Som Connexió customizations.
     """,
     "license": "AGPL-3",
-    'data': [
-        'views/res_partner_view.xml'
-    ],
+    'data': [],
 }
