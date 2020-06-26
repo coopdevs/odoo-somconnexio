@@ -24,6 +24,7 @@
         'views/coop_agreement_view.xml',
         'views/menus.xml',
         'views/res_partner_view.xml',
+        'views/contract_view.xml',
         'security/ir.model.access.csv'
     ],
 }
