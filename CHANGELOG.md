@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 * Add support for Cooperative Agreement [!5](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/5)
+* Add ContractCategory and a relation between ProductCategory and ContractCategory to validate the Contract services [!9](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/9)
