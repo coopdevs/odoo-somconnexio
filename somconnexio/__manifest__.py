@@ -5,7 +5,7 @@
         'easy_my_coop_es',
         'easy_my_coop_sponsorship',
         'sale_management',
-        'contract'
+        'contract',
         'web_favicon',
         'web_responsive',
         'web_decimal_numpad_dot',
