@@ -22,9 +22,10 @@
     'data': [
         'views/subscription_request_view.xml',
         'views/coop_agreement_view.xml',
-        'views/menus.xml',
         'views/res_partner_view.xml',
         'views/contract_view.xml',
+        'views/contract_category_product_view.xml',
+        'views/menus.xml',
         'security/ir.model.access.csv'
     ],
 }

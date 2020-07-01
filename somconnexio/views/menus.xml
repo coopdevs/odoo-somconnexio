@@ -6,4 +6,10 @@
     action="coop_agreement_action_view"
     parent="easy_my_coop.menu_easy_my_coop_main_coop"
     sequence="230" />
+  <menuitem
+    name="Contract - Product category relation"
+    id="menu_contract_category_product"
+    action="contract_category_product_action"
+    parent="sale.prod_config_main"
+    sequence="250" />
 </odoo>
