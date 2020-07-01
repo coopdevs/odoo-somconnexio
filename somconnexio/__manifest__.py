@@ -10,7 +10,7 @@
         'web_responsive',
         'web_decimal_numpad_dot',
         'web_no_bubble',
-        'web_searchbar_full_width'
+        'web_searchbar_full_width',
     ],
     'author': "Coopdevs Treball SCCL",
     'website': 'https://coopdevs.org',
@@ -26,6 +26,9 @@
         'views/contract_view.xml',
         'views/contract_category_product_view.xml',
         'views/menus.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
+        'data/contract_categories.xml',
+        'data/product_categories.xml',
+        'data/contract_category_product.xml',
     ],
 }

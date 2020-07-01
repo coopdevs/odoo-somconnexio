@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="mobile" model="contract.category">
+      <field name="name">Mobile</field>
+    </record>
+    <record id="broadband" model="contract.category">
+      <field name="name">Broadband</field>
+    </record>
+  </data>
+</odoo>
