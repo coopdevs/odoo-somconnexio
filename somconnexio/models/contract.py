@@ -22,9 +22,23 @@ class Contract(models.Model):
         ])
 
         for line in self.contract_line_ids:
-            if (line.product_id.product_tmpl_id not in available_products_categ):
+            if line.product_id.product_tmpl_id not in available_products_categ:
                 raise ValidationError(
                     'Product %s is not allowed by contract type %s' % (
                         line.product_id.name, self.contract_category_id.name
                     )
                 )
+
+    @api.one
+    @api.constrains('partner_id', 'contract_line_ids')
+    def _check_coop_agreement(self):
+        if self.partner_id.coop_agreement:
+            for line in self.contract_line_ids:
+                line_prod_tmpl_id = line.product_id.product_tmpl_id
+                agreement = self.partner_id.coop_agreement_id
+                if line_prod_tmpl_id not in agreement.products:
+                    raise ValidationError(
+                        'Product %s is not allowed by agreement %s' % (
+                            line.product_id.name, agreement.code
+                        )
+                    )
