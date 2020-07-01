@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <menuitem
+    name="Coop Agreements"
+    id="menu_easy_my_coop_coop_agreements"
+    action="coop_agreement_action_view"
+    parent="easy_my_coop.menu_easy_my_coop_main_coop"
+    sequence="230" />
+</odoo>

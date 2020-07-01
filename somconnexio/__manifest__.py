@@ -1,11 +1,11 @@
 {
     'name': "Odoo Som Connexió customizations",
-    'version': '12.0.0.0.1',
+    'version': '12.0.0.0.2',
     'depends': [
         'easy_my_coop_es',
         'easy_my_coop_sponsorship',
         'sale_management',
-        'contract'
+        'contract',
         'web_favicon',
         'web_responsive',
         'web_decimal_numpad_dot',
@@ -19,5 +19,11 @@
     Odoo Som Connexió customizations.
     """,
     "license": "AGPL-3",
-    'data': [],
+    'data': [
+        'views/subscription_request_view.xml',
+        'views/coop_agreement_view.xml',
+        'views/menus.xml',
+        'views/res_partner_view.xml',
+        'security/ir.model.access.csv'
+    ],
 }

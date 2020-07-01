@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="res_partner_form" model="ir.ui.view">
+    <field name="name">res.partner.form.somconnexio</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="easy_my_coop_sponsorship.res_partner_form_easy_my_coop" />
+    <field name="arch" type="xml">
+      <field name="sponsor_id" position="after">
+        <field name="coop_agreement"/>
+        <field name="coop_agreement_id" attrs="{'invisible': [('coop_agreement','=',False)]}"/>
+      </field>
+    </field>
+  </record>
+</odoo>
+
