@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record id="contract_category_service_technology_tree" model="ir.ui.view">
+    <field name="name">contract.category.service.technology.tree</field>
+    <field name="model">contract.category.service.technology</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="contract_category_id"/>
+        <field name="service_technology_id"/>
+      </tree>
+    </field>
+  </record>
+  <record id="contract_category_service_technology_action"  model="ir.actions.act_window">
+    <field name="name">Contract Category - Service Technology relation</field>
+    <field name="res_model">contract.category.service.technology</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree</field>
+  </record>
+</odoo>

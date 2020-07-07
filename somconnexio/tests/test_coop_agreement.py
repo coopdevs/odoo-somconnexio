@@ -71,7 +71,8 @@ class CoopAgreementTest(TransactionCase):
             'contract_line_ids': [(0, False, {
                 'name': 'Broadband',
                 'product_id': self.product_broadband.product_variant_id.id
-            })]
+            })],
+            'service_technology_id': self.ref('somconnexio.service_technology_adsl')
         }
         self.contract_mobile_args = {
             'name': 'Contract w/coop agreement that limits to broadband',

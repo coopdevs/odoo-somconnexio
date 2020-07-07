@@ -7,8 +7,32 @@ class Contract(models.Model):
 
     contract_category_id = fields.Many2one(
         'contract.category',
-        'Category Contract'
+        'Category Contract',
+        required = True
     )
+    service_technology_id = fields.Many2one(
+        'service.technology',
+        'Service Technology'
+    )
+
+    @api.one
+    @api.constrains('contract_category_id', 'service_technology_id')
+    def _check_contract_category_service_technology(self):
+        available_relations = (
+            self.env['contract.category.service.technology'].search([
+                ('contract_category_id', '=', self.contract_category_id.id)
+            ])
+        )
+        available_services_tech = [
+            c.service_technology_id.id for c in available_relations
+        ]
+        if self.service_technology_id.id not in available_services_tech:
+            raise ValidationError(
+                'Service technology %s is not allowed by contract type %s' % (
+                    self.service_technology_id.name,
+                    self.contract_category_id.name
+                )
+            )
 
     @api.one
     @api.constrains('contract_category_id', 'contract_line_ids')
@@ -42,3 +66,14 @@ class Contract(models.Model):
                             line.product_id.name, agreement.code
                         )
                     )
+
+    @api.model
+    def create(self, values):
+        if 'service_technology_id' not in values:
+            mobile_category_id = self.env.ref('somconnexio.mobile').id
+            if values['contract_category_id'] == mobile_category_id:
+                values['service_technology_id'] = self.env.ref(
+                    'somconnexio.service_technology_mobile'
+                ).id
+        res = super(Contract, self).create(values)
+        return res
