@@ -26,6 +26,7 @@
         'views/contract_view.xml',
         'views/contract_category_product_view.xml',
         'views/contract_category_service_technology_view.xml',
+        'views/service_technology_service_supplier.xml',
         'views/menus.xml',
         'security/ir.model.access.csv',
         'data/contract_categories.xml',
@@ -33,5 +34,7 @@
         'data/contract_category_product.xml',
         'data/service_technology.xml',
         'data/contract_category_service_technology.xml',
+        'data/service_supplier.xml',
+        'data/service_technology_service_supplier.xml',
     ],
 }

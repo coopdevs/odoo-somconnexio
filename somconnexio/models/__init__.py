@@ -4,3 +4,4 @@ from . import res_partner
 from . import contract_category
 from . import contract
 from . import service_technology
+from . import service_supplier

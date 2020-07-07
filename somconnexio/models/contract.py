@@ -14,25 +14,50 @@ class Contract(models.Model):
         'service.technology',
         'Service Technology'
     )
+    service_supplier_id = fields.Many2one(
+        'service.supplier',
+        'Service Supplier'
+    )
 
+    @api.one
+    @api.constrains('service_technology_id','service_supplier_id')
+    def _check_service_technology_service_supplier(self):
+        if self.service_supplier_id:
+            available_relations = (
+                self.env['service.technology.service.supplier'].search([
+                    ('service_technology_id', '=', self.service_technology_id.id)
+                ])
+            )
+            available_service_suppliers = [
+                s.service_supplier_id.id for s in available_relations
+            ]
+            if self.service_supplier_id.id not in available_service_suppliers:
+                raise ValidationError(
+                    'Service supplier %s is not allowed by service technology %s'
+                    % (
+                        self.service_supplier_id.name,
+                        self.service_technology_id.name
+                    )
+                )
     @api.one
     @api.constrains('contract_category_id', 'service_technology_id')
     def _check_contract_category_service_technology(self):
-        available_relations = (
-            self.env['contract.category.service.technology'].search([
-                ('contract_category_id', '=', self.contract_category_id.id)
-            ])
-        )
-        available_services_tech = [
-            c.service_technology_id.id for c in available_relations
-        ]
-        if self.service_technology_id.id not in available_services_tech:
-            raise ValidationError(
-                'Service technology %s is not allowed by contract type %s' % (
-                    self.service_technology_id.name,
-                    self.contract_category_id.name
-                )
+        if self.service_technology_id:
+            available_relations = (
+                self.env['contract.category.service.technology'].search([
+                    ('contract_category_id', '=', self.contract_category_id.id)
+                ])
             )
+            available_services_tech = [
+                c.service_technology_id.id for c in available_relations
+            ]
+            if self.service_technology_id.id not in available_services_tech:
+                raise ValidationError(
+                    'Service technology %s is not allowed by contract type %s' % (
+                        self.service_technology_id.name,
+                        self.contract_category_id.name
+                    )
+                )
 
     @api.one
     @api.constrains('contract_category_id', 'contract_line_ids')
@@ -69,11 +94,25 @@ class Contract(models.Model):
 
     @api.model
     def create(self, values):
-        if 'service_technology_id' not in values:
-            mobile_category_id = self.env.ref('somconnexio.mobile').id
-            if values['contract_category_id'] == mobile_category_id:
+        mobile_category_id = self.env.ref('somconnexio.mobile').id
+        if values['contract_category_id'] == mobile_category_id:
+            if 'service_technology_id' not in values:
                 values['service_technology_id'] = self.env.ref(
                     'somconnexio.service_technology_mobile'
+                ).id
+            if 'service_supplier_id' not in values:
+                values['service_supplier_id'] = self.env.ref(
+                    'somconnexio.service_supplier_masmovil'
+                ).id
+        if 'service_technology_id' in values:
+            service_tech_id = values['service_technology_id']
+            adsl_id = self.env.ref('somconnexio.service_technology_adsl').id
+            if (
+                    service_tech_id == adsl_id and
+                    'service_supplier_id' not in values
+            ):
+                values['service_supplier_id'] = self.env.ref(
+                    'somconnexio.service_supplier_orange'
                 ).id
         res = super(Contract, self).create(values)
         return res
