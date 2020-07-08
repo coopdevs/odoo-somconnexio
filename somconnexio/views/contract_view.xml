@@ -12,6 +12,7 @@
           </group>
           <group>
             <field name="service_technology_id" />
+            <field name="service_supplier_id" />
           </group>
         </group>
       </group>
