@@ -27,6 +27,7 @@
         'views/contract_category_product_view.xml',
         'views/contract_category_service_technology_view.xml',
         'views/service_technology_service_supplier.xml',
+        'views/product_pricelist_view.xml',
         'views/menus.xml',
         'security/ir.model.access.csv',
         'data/contract_categories.xml',
