@@ -24,6 +24,9 @@ class ProductCategoryTechnologySupplier(TransactionCase):
             'service_technology_id': self.ref(
                 'somconnexio.service_technology_mobile'
             ),
+            'service_supplier_id': self.ref(
+                'somconnexio.service_supplier_masmovil'
+            ),
             'partner_id': self.ref(
                 'easy_my_coop.res_partner_cooperator_2_demo'
             ),
@@ -34,6 +37,9 @@ class ProductCategoryTechnologySupplier(TransactionCase):
             'contract_category_id': self.ref('somconnexio.broadband'),
             'service_technology_id': self.ref(
                 'somconnexio.service_technology_fiber'
+            ),
+            'service_supplier_id': self.ref(
+                'somconnexio.service_supplier_vodafone'
             ),
             'partner_id': self.ref(
                 'easy_my_coop.res_partner_cooperator_2_demo'
@@ -101,24 +107,160 @@ class ProductCategoryTechnologySupplier(TransactionCase):
         )
         self.product_mobile_oneshot = product_mobile_oneshot_tmpl.product_variant_id
 
-    def test_contract_adsl_orage_wrong_product(self):
-        contract_adsl_worng_product_args = self.contract_adsl_args.copy()
-        contract_adsl_worng_product_args['contract_line_ids'] = [(0, False, {
+        mobile_additional_product_tmpl_args = {
+            'name': 'Internacional 100 Min',
+            'type': 'service',
+            'categ_id': self.ref('somconnexio.mobile_additional_service')
+        }
+        mobile_additional_product_tmpl = self.env['product.template'].create(
+            mobile_additional_product_tmpl_args
+        )
+        self.product_mobile_additional = (
+            mobile_additional_product_tmpl.product_variant_id
+        )
+
+    def test_contract_adsl_orange_wrong_product(self):
+        contract_adsl_wrong_product_args = self.contract_adsl_args.copy()
+        contract_adsl_wrong_product_args['contract_line_ids'] = [(0, False, {
             "name": "ADSL",
             "product_id": self.product_broadband_fiber.id
         })]
         self.assertRaises(
             ValidationError,
             self.env['contract.contract'].create,
-            [contract_adsl_worng_product_args]
+            [contract_adsl_wrong_product_args]
         )
 
-    def test_contract_adsl_orage_allowed_product(self):
-        contract_adsl_worng_product_args = self.contract_adsl_args.copy()
-        contract_adsl_worng_product_args['contract_line_ids'] = [(0, False, {
+    def test_contract_adsl_orange_wrong_technology(self):
+        contract_adsl_wrong_tech_args = self.contract_adsl_args.copy()
+        contract_adsl_wrong_tech_args['service_technology_id'] = (
+            self.ref("somconnexio.service_technology_fiber")
+        )
+        contract_adsl_wrong_tech_args['contract_line_ids'] = [(0, False, {
             "name": "ADSL",
             "product_id": self.product_broadband_adsl.id
+        }), (0, False, {
+            "name": "Alta parell existent a terminis",
+            "product_id": self.product_broadband_adsl_oneshot.id
+        })]
+        self.assertRaises(
+            ValidationError,
+            self.env['contract.contract'].create,
+            [contract_adsl_wrong_tech_args]
+        )
+
+    def test_contract_adsl_orange_wrong_supplier(self):
+        contract_adsl_wrong_supplier_args = self.contract_adsl_args.copy()
+        contract_adsl_wrong_supplier_args['service_supplier_id'] = (
+            self.ref("somconnexio.service_supplier_vodafone")
+        )
+        contract_adsl_wrong_supplier_args['contract_line_ids'] = [(0, False, {
+            "name": "ADSL",
+            "product_id": self.product_broadband_adsl.id
+        }), (0, False, {
+            "name": "Alta parell existent a terminis",
+            "product_id": self.product_broadband_adsl_oneshot.id
+        })]
+        self.assertRaises(
+            ValidationError,
+            self.env['contract.contract'].create,
+            [contract_adsl_wrong_supplier_args]
+        )
+
+
+    def test_contract_adsl_orange_allowed_product(self):
+        contract_adsl_allowed_product_args = self.contract_adsl_args.copy()
+        contract_adsl_allowed_product_args['contract_line_ids'] = [(0, False, {
+            "name": "ADSL",
+            "product_id": self.product_broadband_adsl.id
+        }), (0, False, {
+            "name": "Alta parell existent a terminis",
+            "product_id": self.product_broadband_adsl_oneshot.id
         })]
         self.assertTrue(
-            self.env['contract.contract'].create(contract_adsl_worng_product_args)
+            self.env['contract.contract'].create(contract_adsl_allowed_product_args)
+        )
+
+    def test_contract_mobile_wrong_product(self):
+        contract_mobile_wrong_product_args = self.contract_mobile_args.copy()
+        contract_mobile_wrong_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Mobile Sense Minuts",
+            "product_id": self.product_broadband_adsl.id
+        })]
+        self.assertRaises(
+            ValidationError,
+            self.env['contract.contract'].create,
+            [contract_mobile_wrong_product_args]
+        )
+
+    def test_contract_mobile_allowed_product(self):
+        contract_mobile_allowed_product_args = self.contract_mobile_args.copy()
+        contract_mobile_allowed_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Mobile Sense Minuts",
+            "product_id": self.product_mobile.id
+        }), (0, False, {
+            "name": "One Shot Mobile",
+            "product_id": self.product_mobile_oneshot.id
+        }), (0, False, {
+            "name": "Internacional 100 Min",
+            "product_id": self.product_mobile_additional.id
+        })]
+        self.assertTrue(self.env['contract.contract'].create(
+            contract_mobile_allowed_product_args
+        ))
+
+    def test_contract_fiber_orange_allowed_product(self):
+        contract_fiber_allowed_product_args = self.contract_fiber_args.copy()
+        contract_fiber_allowed_product_args['service_supplier_id'] = self.ref(
+            'somconnexio.service_supplier_orange'
+        )
+        contract_fiber_allowed_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Fiber",
+            "product_id": self.product_broadband_fiber.id
+        }), (0, False, {
+            "name": "One Shot Broadband",
+            "product_id": self.product_broadband_oneshot.id
+        })]
+        self.assertTrue(
+            self.env['contract.contract'].create(contract_fiber_allowed_product_args)
+        )
+
+    def test_contract_fiber_orange_wrong_product(self):
+        contract_fiber_wrong_product_args = self.contract_fiber_args.copy()
+        contract_fiber_wrong_product_args['service_supplier_id'] = self.ref(
+            'somconnexio.service_supplier_orange'
+        )
+        contract_fiber_wrong_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Fiber",
+            "product_id": self.product_broadband_adsl.id
+        })]
+        self.assertRaises(
+            ValidationError,
+            self.env['contract.contract'].create,
+            [contract_fiber_wrong_product_args]
+        )
+
+    def test_contract_fiber_vodafone_allowed_product(self):
+        contract_fiber_allowed_product_args = self.contract_fiber_args.copy()
+        contract_fiber_allowed_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Fiber",
+            "product_id": self.product_broadband_fiber.id
+        }), (0, False, {
+            "name": "One Shot Broadband",
+            "product_id": self.product_broadband_oneshot.id
+        })]
+        self.assertTrue(
+            self.env['contract.contract'].create(contract_fiber_allowed_product_args)
+        )
+
+    def test_contract_fiber_vodafone_wrong_product(self):
+        contract_fiber_wrong_product_args = self.contract_fiber_args.copy()
+        contract_fiber_wrong_product_args['contract_line_ids'] = [(0, False, {
+            "name": "Fiber",
+            "product_id": self.product_broadband_adsl.id
+        })]
+        self.assertRaises(
+            ValidationError,
+            self.env['contract.contract'].create,
+            [contract_fiber_wrong_product_args]
         )
