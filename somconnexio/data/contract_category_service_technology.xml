@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="contract_category_service_technology_mobile" model="contract.category.service.technology">
+    <field name="contract_category_id" ref="mobile" />
+    <field name="service_technology_id" ref="service_technology_mobile" />
+  </record>
+  <record id="contract_category_service_technology_adsl" model="contract.category.service.technology">
+    <field name="contract_category_id" ref="broadband" />
+    <field name="service_technology_id" ref="service_technology_adsl" />
+  </record>
+  <record id="contract_category_service_technology_fiber" model="contract.category.service.technology">
+    <field name="contract_category_id" ref="broadband" />
+    <field name="service_technology_id" ref="service_technology_fiber" />
+  </record>
+
+</odoo>

@@ -5,9 +5,16 @@
     <field name="model">contract.contract</field>
     <field name="inherit_id" ref="contract.contract_contract_form_view" />
     <field name="arch" type="xml">
-      <field name="recurring_next_date" position="after">
-        <field name="contract_category_id" />
-      </field>
+      <group name="main" position="after">
+        <group name="contract_service">
+          <group>
+            <field name="contract_category_id" />
+          </group>
+          <group>
+            <field name="service_technology_id" />
+          </group>
+        </group>
+      </group>
     </field>
   </record>
 </odoo>

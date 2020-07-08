@@ -12,4 +12,16 @@
     action="contract_category_product_action"
     parent="sale.prod_config_main"
     sequence="250" />
+  <menuitem
+    name="Contract - Service technology relation"
+    id="menu_contract_category_service"
+    action="contract_category_service_technology_action"
+    parent="sale.prod_config_main"
+    sequence="270" />
+  <menuitem
+    name="Service technology - supplier relation"
+    id="menu_service_technology_supplier"
+    action="service_technology_service_supplier_action"
+    parent="sale.prod_config_main"
+    sequence="290" />
 </odoo>
