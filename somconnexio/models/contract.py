@@ -60,12 +60,13 @@ class Contract(models.Model):
                 )
 
     @api.one
-    @api.constrains('contract_category_id', 'contract_line_ids')
+    @api.constrains('service_technology_id', 'service_supplier_id', 'contract_line_ids')
     def _check_contract_category_products(self):
-        available_relations = self.env['contract.category.product'].search([
-            ('contract_category', '=', self.contract_category_id.id)
+        available_relations = self.env['product.category.technology.supplier'].search([
+            ('service_technology_id', '=', self.service_technology_id.id),
+            ('service_supplier_id', '=', self.service_supplier_id.id)
         ])
-        available_categories = [c.product_category.id for c in available_relations]
+        available_categories = [c.product_category_id.id for c in available_relations]
         available_products_categ = self.env['product.template'].search([
             ('categ_id', 'in', available_categories)
         ])
@@ -73,8 +74,8 @@ class Contract(models.Model):
         for line in self.contract_line_ids:
             if line.product_id.product_tmpl_id not in available_products_categ:
                 raise ValidationError(
-                    'Product %s is not allowed by contract type %s' % (
-                        line.product_id.name, self.contract_category_id.name
+                    'Product %s is not allowed by contract with technology %s and supplier %s' % (
+                        line.product_id.name, self.service_technology_id.name, self.service_supplier_id.name
                     )
                 )
 

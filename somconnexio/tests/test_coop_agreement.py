@@ -9,7 +9,7 @@ class CoopAgreementTest(TransactionCase):
         broadband_product_tmpl_args = {
             'name': 'ADSL 20Mb',
             'type': 'service',
-            'categ_id': self.ref('somconnexio.broadband_service')
+            'categ_id': self.ref('somconnexio.broadband_adsl_service')
         }
         product_broadband_tmpl = self.env['product.template'].create(
             broadband_product_tmpl_args
