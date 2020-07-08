@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+* Make editable the Product Pricelist view and only show the product name and price [!11](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/11)
+
 ### Added
 
 * Add support for Cooperative Agreement [!5](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/5)
