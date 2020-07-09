@@ -64,4 +64,3 @@ test:
     - travis_run_tests
     - travis_after_tests_success || true
   coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
-
