@@ -8,7 +8,7 @@ class Contract(models.Model):
     contract_category_id = fields.Many2one(
         'contract.category',
         'Category Contract',
-        required = True
+        required=True
     )
     service_technology_id = fields.Many2one(
         'service.technology',
@@ -20,7 +20,7 @@ class Contract(models.Model):
     )
 
     @api.one
-    @api.constrains('service_technology_id','service_supplier_id')
+    @api.constrains('service_technology_id', 'service_supplier_id')
     def _check_service_technology_service_supplier(self):
         if self.service_supplier_id:
             available_relations = (
@@ -39,6 +39,7 @@ class Contract(models.Model):
                         self.service_technology_id.name
                     )
                 )
+
     @api.one
     @api.constrains('contract_category_id', 'service_technology_id')
     def _check_contract_category_service_technology(self):
@@ -74,8 +75,11 @@ class Contract(models.Model):
         for line in self.contract_line_ids:
             if line.product_id.product_tmpl_id not in available_products_categ:
                 raise ValidationError(
-                    'Product %s is not allowed by contract with technology %s and supplier %s' % (
-                        line.product_id.name, self.service_technology_id.name, self.service_supplier_id.name
+                    'Product %s is not allowed by contract with \
+                            technology %s and supplier %s' % (
+                        line.product_id.name,
+                        self.service_technology_id.name,
+                        self.service_supplier_id.name
                     )
                 )
 

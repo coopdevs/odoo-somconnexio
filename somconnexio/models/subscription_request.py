@@ -7,7 +7,11 @@ class SubscriptionRequest(models.Model):
 
     iban = fields.Char(required=True)
 
-    type = fields.Selection(selection_add=[('sponsorship_coop_agreement', 'Sponsorship Coop Agreement')])
+    type = fields.Selection(
+        selection_add=[(
+            'sponsorship_coop_agreement',
+            'Sponsorship Coop Agreement'
+        )])
 
     coop_agreement_id = fields.Many2one(
         'coop.agreement',
@@ -16,12 +20,16 @@ class SubscriptionRequest(models.Model):
 
     def get_partner_company_vals(self):
         values = super().get_partner_company_vals()
-        values['coop_agreement_id'] = self.coop_agreement_id and self.coop_agreement_id.id
+        values['coop_agreement_id'] = self.coop_agreement_id and \
+            self.coop_agreement_id.id
+
         return values
 
     def get_partner_vals(self):
         values = super().get_partner_vals()
-        values['coop_agreement_id'] = self.coop_agreement_id and self.coop_agreement_id.id
+        values['coop_agreement_id'] = self.coop_agreement_id and \
+            self.coop_agreement_id.id
+
         return values
 
     @api.one
@@ -57,4 +65,6 @@ class SubscriptionRequest(models.Model):
     @api.constrains('coop_agreement_id', 'type')
     def _check_coop_agreement_id(self):
         if self.type == 'sponsorship_coop_agreement' and not self.coop_agreement_id:
-            raise ValidationError("If it's a Coop Agreement sponsorship the Coop Agreement must be set.")
+            raise ValidationError(
+                "If it's a Coop Agreement sponsorship the Coop Agreement must be set."
+            )

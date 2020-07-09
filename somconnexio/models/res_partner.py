@@ -23,9 +23,9 @@ class ResPartner(models.Model):
             else:
                 sub_requests = partner.subscription_request_ids.filtered(
                     lambda record: (
-                            record.state == 'done' and
-                            not record.sponsor_id and
-                            not record.coop_agreement_id
+                        record.state == 'done' and
+                        not record.sponsor_id and
+                        not record.coop_agreement_id
                     )
                 )
                 is_candidate = bool(sub_requests)

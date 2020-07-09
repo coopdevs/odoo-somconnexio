@@ -69,7 +69,6 @@ class ServiceSupplierTest(TransactionCase):
             self.browse_ref('somconnexio.service_supplier_masmovil')
         )
 
-
     def test_wrong_adsl_vodafone(self):
         contract_adsl_args = self.contract_adsl_args.copy()
         contract_adsl_args.update({
@@ -151,6 +150,7 @@ class ServiceSupplierTest(TransactionCase):
                 'easy_my_coop.res_partner_cooperator_2_demo'
             ),
         }
+
     def test_wrong_mobile_vodafone(self):
         contract_mobile_args = self.contract_mobile_args.copy()
         contract_mobile_args.update({

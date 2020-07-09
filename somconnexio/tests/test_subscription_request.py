@@ -17,7 +17,7 @@ class TestSubscription(TransactionCase):
             'city': 'Brussels',
             'zip_code': '1111',
             'country_id': 20,
-            'date': datetime.now()-timedelta(days=12),
+            'date': datetime.now() - timedelta(days=12),
             'company_id': 1,
             'source': 'manual',
             'share_product_id': False,
@@ -45,7 +45,7 @@ class TestSubscription(TransactionCase):
         subscription = self.SubscriptionRequest.create(vals_subscription_sponsorship)
         self.assertEqual(subscription.subscription_amount, 0.0)
 
-    def test_create_subscription_coop_agreement_sponsorship_without_coop_agreement_raise_validation_error(self):
+    def test_create_subscription_coop_agreement_sponsorship_without_coop_agreement_raise_validation_error(self):  # noqa
         vals_subscription_sponsorship = self.vals_subscription.copy()
         vals_subscription_sponsorship.update({
             'share_product_id': False,
@@ -54,7 +54,11 @@ class TestSubscription(TransactionCase):
             'coop_agreement_id': False,
         })
 
-        self.assertRaises(ValidationError, self.SubscriptionRequest.create, vals_subscription_sponsorship)
+        self.assertRaises(
+            ValidationError,
+            self.SubscriptionRequest.create,
+            vals_subscription_sponsorship
+        )
 
     def test_validate_subscription_coop_agreement_sponsorship(self):
         vals_subscription_sponsorship = self.vals_subscription.copy()

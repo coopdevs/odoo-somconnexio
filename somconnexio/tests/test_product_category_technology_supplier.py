@@ -62,7 +62,7 @@ class ProductCategoryTechnologySupplier(TransactionCase):
         product_adsl_oneshot_tmpl = self.env['product.template'].create(
             broadband_adsl_oneshot_product_tmpl_args
         )
-        self.product_broadband_adsl_oneshot = product_adsl_oneshot_tmpl.product_variant_id
+        self.product_broadband_adsl_oneshot = product_adsl_oneshot_tmpl.product_variant_id  # noqa
 
         broadband_fiber_product_tmpl_args = {
             'name': 'Fiber',
@@ -181,7 +181,6 @@ class ProductCategoryTechnologySupplier(TransactionCase):
             self.env['contract.contract'].create,
             [contract_adsl_wrong_supplier_args]
         )
-
 
     def test_contract_adsl_orange_allowed_product(self):
         contract_adsl_allowed_product_args = self.contract_adsl_args.copy()

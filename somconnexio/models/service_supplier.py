@@ -11,5 +11,4 @@ class ServiceTechnologyServiceSuplier(models.Model):
     service_supplier_id = fields.Many2one('service.supplier', 'Supplier')
     service_technology_id = fields.Many2one(
         'service.technology',
-        'Technology'
-    )
+        'Technology')

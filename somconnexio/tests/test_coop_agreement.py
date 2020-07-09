@@ -2,10 +2,11 @@ from odoo.tests.common import TransactionCase
 from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
 
+
 class CoopAgreementTest(TransactionCase):
 
     def setUp(self, *args, **kwargs):
-        result = super().setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         broadband_product_tmpl_args = {
             'name': 'ADSL 20Mb',
             'type': 'service',

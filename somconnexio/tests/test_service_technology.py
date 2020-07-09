@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 class ServiceTechnologyTest(TransactionCase):
     def setUp(self, *args, **kwargs):
-        result = super().setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.contract_broadband_args = {
             'name': 'Contract w/category contract to broadband',
             'contract_category_id': self.ref('somconnexio.broadband'),
