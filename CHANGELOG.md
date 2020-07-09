@@ -15,3 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Add support for Cooperative Agreement [!5](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/5)
 * Add ContractCategory and a relation between ProductCategory and ContractCategory to validate the Contract services [!9](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/9)
 * Add Service Supplier and Service Technology. Also add constrains between Service Supplier, Service Technology and Contract Category [!10](https://gitlab.com/coopdevs/odoo-somconnexio/-/merge_requests/10) and [#2](https://github.com/coopdevs/odoo-somconnexio/-/merge_requests/2)
+* Add tests, views and data for Service Supplier, Service Technology and Product Category [#3](https://github.com/coopdevs/odoo-somconnexio/-/merge_requests/3)
