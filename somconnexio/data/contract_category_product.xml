@@ -25,5 +25,9 @@
       <field name="contract_category" ref="broadband"/>
       <field name="product_category" ref="broadband_oneshot_service"/>
     </record>
+    <record id="broadband_broadband_oneshot_adsl_service" model="contract.category.product">
+      <field name="contract_category" ref="broadband"/>
+      <field name="product_category" ref="broadband_oneshot_adsl_service"/>
+    </record>
   </data>
 </odoo>
